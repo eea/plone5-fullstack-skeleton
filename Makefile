@@ -30,20 +30,7 @@ init:
 		git submodule update; \
 		cd ${FRONTEND}; \
 		git submodule init; \
-		git submodule update"
-
-.PHONY: build-plone
-build-plone:		## Build the Plone docker image
-	docker-compose stop plone
-	docker-compose rm -f plone
-	docker-compose build plone
-	docker-compose up -d plone
-
-.PHONY: plone-shell
-plone-shell:		## Run a shell on the Plone docker image
-	docker-compose stop plone
-	docker-compose up -d ploneshell
-	docker-compose exec ploneshell bash
+		git submodule update
 
 .PHONY: setup-data
 setup-data:		## Setup the datastorage for Zeo
@@ -118,6 +105,13 @@ sync-makefiles:		## Updates makefiles to latest github versions
 	cp .skel/Makefile ./
 	cp .skel/frontend/Makefile ./frontend/
 	cp .skel/backend/Makefile ./backend/Makefile
+	rm -rf ./.skel
+
+.PHONY: sync-dockercompose
+sync-dockercompose:		## Updates docker-compose.yml to latest github versions
+	git clone ${SKELETON} .skel
+	cp .skel/docker-compose.yml ./
+	rm -rf ./.skel
 
 .PHONY: help
 help:		## Show this help.
