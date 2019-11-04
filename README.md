@@ -11,5 +11,5 @@ bash -c "$(curl https://raw.githubusercontent.com/tiberiuichim/fullstack-skeleto
 To keep up to date with it run:
 
 ```
-make update-makefiles
+make sync-makefiles
 ```

@@ -4,6 +4,8 @@ SHELL=/bin/bash
 
 image-name-split = $(firstword $(subst :, ,$1))
 
+SKELETON := "https://github.com/tiberiuichim/fullstack-skeleton.git"
+
 # identify project folders
 BACKEND := backend
 FRONTEND := frontend
@@ -109,6 +111,13 @@ eslint:		## Run eslint --fix on all *.js, *.json, *.jsx files in src
 clean-releases:		## Cleanup space by removing old docker images
 	sh -c "docker images | grep ${BACKEND_IMAGE_NAME} | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi ${BACKEND_IMAGE_NAME}:{}"
 	sh -c "docker images | grep ${FRONTEND_IMAGE_NAME} | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi ${FRONTEND_IMAGE_NAME}:{}"
+
+.PHONY: sync-makefiles
+sync-makefiles:		## Updates makefiles to latest github versions
+	git clone ${SKELETON} .skel
+	cp .skel/Makefile ./
+	cp .skel/frontend/Makefile ./frontend/
+	cp .skel/backend/Makefile ./backend/Makefile
 
 .PHONY: help
 help:		## Show this help.
