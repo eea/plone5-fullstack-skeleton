@@ -1,2 +1,3 @@
-# fullstack_skeleton
-A skeleton for a fullstack (Volto + Plone) web application
+# Volto-based generic fullstack skeleton
+
+A place to put common files used to develop Plone 5 + Volto based projects.
