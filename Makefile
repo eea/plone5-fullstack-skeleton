@@ -80,7 +80,7 @@ release-frontend:		## Make a Docker Hub release for frontend
 .PHONY: release-plone
 release-plone:		## Make a Docker Hub release for the Plone backend
 	set -e; \
-		cd $(BACKEND) \
+		cd $(BACKEND); \
 		make release
 
 .PHONY: eslint
