@@ -11,13 +11,15 @@ BACKEND := backend
 FRONTEND := frontend
 
 BACKEND_DOCKERIMAGE_FILE := "${BACKEND}/docker-image.txt"
-FRONTEND_DOCKERIMAGE_FILE := "${FRONTEND}/docker-image.txt"
-
 export BACKEND_IMAGE := $(shell cat $(BACKEND_DOCKERIMAGE_FILE))
-export FRONTEND_IMAGE := $(shell cat $(FRONTEND_DOCKERIMAGE_FILE))
-
 BACKEND_IMAGE_NAME := $(call image-name-split,$(BACKEND_IMAGE))
-FRONTEND_IMAGE_NAME := $(call image-name-split,$(FRONTEND_IMAGE))
+
+ifneq "$(wildcard ${FRONTEND}/.)" ""
+	FRONTEND_DOCKERIMAGE_FILE := "${FRONTEND}/docker-image.txt"
+	export FRONTEND_IMAGE := $(shell cat $(FRONTEND_DOCKERIMAGE_FILE))
+	FRONTEND_IMAGE_NAME := $(call image-name-split,$(FRONTEND_IMAGE))
+else
+endif
 
 .PHONY: bootstrap
 bootstrap: init setup-data setup-plone

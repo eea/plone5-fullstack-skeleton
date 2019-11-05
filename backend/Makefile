@@ -7,8 +7,8 @@ IMAGE := $(shell cat $(DOCKERIMAGE_FILE))
 
 .DEFAULT_GOAL := help
 
-.PHONY: all
-all: bump build-image push		## (Host side) release a new version of frontend docker image
+.PHONY: release
+release: bump build-image push		## (Host side) release a new version of frontend docker image
 
 .PHONY: bump
 bump:

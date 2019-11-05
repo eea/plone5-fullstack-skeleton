@@ -36,8 +36,8 @@ analyze:		## (Inside container) build production resources and start bundle anal
 				 RAZZLE_INTERNAL_API_PATH=VOLTO_INTERNAL_API_PATH \
 				 yarn build
 
-.PHONY: image
-image: bump build-image push		## (Host side) release a new version of frontend docker image
+.PHONY: release
+release: bump build-image push		## (Host side) release a new version of frontend docker image
 
 .PHONY: bump
 bump:
