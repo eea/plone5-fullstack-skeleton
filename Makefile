@@ -1,3 +1,5 @@
+MAKEFLAGS += --no-print-directory
+
 .DEFAULT_GOAL := help
 
 SHELL := /bin/bash
