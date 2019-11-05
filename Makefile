@@ -90,11 +90,17 @@ release-frontend:		## Make a Docker Hub release for frontend
 		cd $(FRONTEND); \
 		&& make release
 
-.PHONY: release-plone
-release-plone:		## Make a Docker Hub release for the Plone backend
+.PHONY: release-backend
+release-backend:		## Make a Docker Hub release for the Plone backend
 	set -e; \
 		cd $(BACKEND); \
 		make release
+
+.PHONY: build-backend
+build-backend:		## Make a Docker Hub release for the Plone backend
+	set -e; \
+		cd $(BACKEND); \
+		make build-image
 
 .PHONY: eslint
 eslint:		## Run eslint --fix on all *.js, *.json, *.jsx files in src
