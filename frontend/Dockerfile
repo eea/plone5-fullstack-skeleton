@@ -7,6 +7,7 @@ RUN apt-get install -y git
 
 WORKDIR /opt/frontend/
 
+COPY docker-image.txt /
 COPY package.json .
 RUN yarn install
 
