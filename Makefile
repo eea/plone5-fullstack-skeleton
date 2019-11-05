@@ -68,7 +68,7 @@ frontend-shell:		## Start a shell on the frontend service
 	docker-compose exec frontend bash
 
 .PHONY: plone-shell
-frontend-shell:		## Start a shell on the plone service
+plone-shell:		## Start a shell on the plone service
 	docker-compose up -d plone
 	docker-compose exec plone bash
 
