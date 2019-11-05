@@ -10,7 +10,7 @@ services:
       - zeo
       - memcached
     ports:
-      - "8085:8080"
+      - "${BACKEND_PORT:8085}:8080"
     environment:
       TZ: "Europe/Copenhagen"
       ZEO_ADDRESS: "zeo:8080"
@@ -19,13 +19,13 @@ services:
   frontend:
     image: "${FRONTEND_IMAGE:?no such variable}"
     environment:
-      RAZZLE_API_PATH: "http://localhost:8085/Plone"
+      RAZZLE_API_PATH: "http://localhost:${BACKEND_PORT}/${SITE_NAME:Plone}"
       RAZZLE_INTERNAL_API_PATH: "http://plone:8080/Plone"
-      PORT: "3000"
+      PORT: "${FRONTEND_PORT:3000}"
     ports:
-      - "3000:3000"
-      - "3001:3001"
-      - "8888:8888"
+      - "${FRONTEND_PORT:3000}"
+      - "${FRONTEND_PORT_NEXT:3001}"
+      - "${FRONTEND_ANALYZE_PORT:8888}"
     entrypoint: sh -c "tail -f /dev/null"
     volumes:
       - ./frontend:/opt/frontend/

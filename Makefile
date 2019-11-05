@@ -75,7 +75,7 @@ plone-shell:		## Start a shell on the plone service
 .PHONY: start-frontend-production
 start-frontend-production:		## Start the frontend service in production mode
 	docker-compose up -d frontend
-	docker-compose exec frontend yarn build
+	docker-compose exec frontend make build
 	docker-compose exec frontend yarn start:prod
 
 .PHONY: release-frontend
