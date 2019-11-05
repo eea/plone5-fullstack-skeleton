@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-SHELL := /bin/sh
+SHELL := /bin/bash
 
 image-name-split = $(firstword $(subst :, ,$1))
 
@@ -119,6 +119,10 @@ sync-dockercompose:		## Updates docker-compose.yml to latest github versions
 	git clone ${SKELETON} .skel
 	cp .skel/docker-compose.yml ./
 	rm -rf ./.skel
+
+.PHONY: shell
+shell:		## Starts a shell with proper env set
+	$(SHELL)
 
 .PHONY: help
 help:		## Show this help.
