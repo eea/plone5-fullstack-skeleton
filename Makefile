@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-SHELL=/bin/bash
+SHELL := /bin/sh
 
 image-name-split = $(firstword $(subst :, ,$1))
 
@@ -103,10 +103,15 @@ clean-releases:		## Cleanup space by removing old docker images
 
 .PHONY: sync-makefiles
 sync-makefiles:		## Updates makefiles to latest github versions
-	git clone ${SKELETON} .skel
-	cp .skel/Makefile ./
-	cp .skel/frontend/Makefile ./frontend/
-	cp .skel/backend/Makefile ./backend/Makefile
+	@rm -rf ./.skel
+	@git clone ${SKELETON} .skel
+	@cp .skel/Makefile ./
+	@cp .skel/backend/Makefile ./backend/Makefile
+	@if [ -d "${FRONTEND}" ]; then \
+		cp .skel/frontend/Makefile ./frontend/; \
+	else \
+		echo "No frontend folder"; \
+	fi; \
 	rm -rf ./.skel
 
 .PHONY: sync-dockercompose
