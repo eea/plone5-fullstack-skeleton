@@ -3,7 +3,7 @@ version: "2.1"
 services:
 
   plone:
-    image: "$BACKEND_IMAGE:?no such variable"
+    image: "${BACKEND_IMAGE:?no such variable}"
     labels:
       io.rancher.scheduler.affinity:host_label_ne: reserved=yes
     depends_on:
@@ -17,7 +17,7 @@ services:
       ZOPE_MODE: "zeo_client"
 
   frontend:
-    image: "$FRONTEND_IMAGE:?no such variable"
+    image: "${FRONTEND_IMAGE:?no such variable}"
     environment:
       RAZZLE_API_PATH: "http://localhost:8085/Plone"
       RAZZLE_INTERNAL_API_PATH: "http://plone:8080/Plone"
@@ -30,20 +30,6 @@ services:
     volumes:
       - ./frontend:/opt/frontend/
       # - ./frontend/entrypoint-dev.sh:/opt/fise/entrypoint.sh
-
-  frontend-production:
-    image: ${FRONTEND_IMAGE:?no such variable}
-    environment:
-      API_PATH: "http://localhost:8085/Plone"
-      INTERNAL_API_PATH: "http://plone:8080/Plone"
-      PORT: "3000"
-    ports:
-      - "3000:3000"
-      - "3001:3001"
-      - "8888:8888"
-    entrypoint: sh -c "tail -f /dev/null"
-    volumes:
-      - ./frontend:/opt/frontend/
 
   zeo:
     image: plone:5.2-python2
