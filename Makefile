@@ -22,17 +22,20 @@ else
 endif
 
 .PHONY: bootstrap
-bootstrap: init setup-data setup-plone
+bootstrap: init-submodules setup-data setup-plone
 	@echo "bootstraping"
 
-.PHONY: init
-init:
-	set -e; \
-		git submodule init; \
-		git submodule update; \
+.PHONY: init-submodules
+init-submodules:
+	git submodule init; \
+	git submodule update; \
+	@if [ -d "${FRONTEND}" ]; then \
 		cd ${FRONTEND}; \
 		git submodule init; \
 		git submodule update
+	else \
+		echo "No frontend folder"; \
+	fi; \
 
 .PHONY: setup-data
 setup-data:		## Setup the datastorage for Zeo
@@ -43,10 +46,11 @@ setup-data:		## Setup the datastorage for Zeo
 
 .PHONY: setup-plone
 setup-plone:		## Setup products folder and Plone user
+	sudo chown -R 500 src
 	docker-compose up -d
-	docker-compose exec plone bin/develop rb
-	docker-compose exec plone /docker-initialize.py
-	docker-compose exec plone bin/instance adduser admin admin
+	docker-compose exec plone gosu plone bin/develop rb
+	docker-compose exec plone gosu plone /docker-initialize.py
+	docker-compose exec plone gosu plone bin/instance adduser admin admin
 	sudo chown -R `whoami` src/
 
 .PHONY: start-plone
@@ -54,8 +58,8 @@ start-plone:		## Start the plone process
 	docker-compose stop plone
 	docker-compose up -d zeo
 	docker-compose up -d plone
-	docker-compose exec plone /docker-initialize.py
-	docker-compose exec plone bin/instance fg
+	docker-compose exec plone gosu plone /docker-initialize.py
+	docker-compose exec plone gosu plone bin/instance fg
 
 .PHONY: start-frontend
 start-frontend:		## Start the frontend with Hot Module Reloading
