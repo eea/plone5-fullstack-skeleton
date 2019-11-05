@@ -67,6 +67,11 @@ frontend-shell:		## Start a shell on the frontend service
 	docker-compose up -d frontend
 	docker-compose exec frontend bash
 
+.PHONY: plone-shell
+frontend-shell:		## Start a shell on the plone service
+	docker-compose up -d plone
+	docker-compose exec plone bash
+
 .PHONY: start-frontend-production
 start-frontend-production:		## Start the frontend service in production mode
 	docker-compose up -d frontend
