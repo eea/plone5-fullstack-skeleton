@@ -65,7 +65,6 @@ setup-plone: docker-compose.override.yml		## Setup products folder and Plone use
 .PHONY: start-plone
 start-plone:docker-compose.override.yml		## Start the plone process
 	docker-compose stop plone
-	docker-compose up -d zeo
 	docker-compose up -d plone
 	docker-compose exec plone gosu plone /docker-initialize.py
 	docker-compose exec plone gosu plone bin/instance fg
@@ -83,6 +82,7 @@ frontend-shell:docker-compose.override.yml		## Start a shell on the frontend ser
 .PHONY: plone-shell
 plone-shell:docker-compose.override.yml		## Start a shell on the plone service
 	docker-compose up -d plone
+	docker-compose exec plone gosu plone /docker-initialize.py
 	docker-compose exec plone bash
 
 .PHONY: start-frontend-production
