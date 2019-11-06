@@ -23,8 +23,15 @@ ifneq "$(wildcard ${FRONTEND}/.)" ""
 else
 endif
 
+docker-compose.override.yml:
+	@if [ ! -f 'docker-compose.override.yml' ]; then \
+		if [ -f 'docker-compose.override.example.yml' ]; then \
+			cp docker-compose.override.example.yml docker-compose.override.yml; \
+		fi; \
+	fi;
+
 .PHONY: bootstrap
-bootstrap: init-submodules setup-data setup-plone
+bootstrap: docker-compose.override.yml init-submodules setup-data setup-plone
 	@echo "bootstraping"
 
 .PHONY: init-submodules
@@ -47,7 +54,7 @@ setup-data:		## Setup the datastorage for Zeo
 	sudo chown -R 500 data
 
 .PHONY: setup-plone
-setup-plone:		## Setup products folder and Plone user
+setup-plone: docker-compose.override.yml		## Setup products folder and Plone user
 	sudo chown -R 500 src
 	docker-compose up -d
 	docker-compose exec plone gosu plone bin/develop rb
@@ -56,7 +63,7 @@ setup-plone:		## Setup products folder and Plone user
 	sudo chown -R `whoami` src/
 
 .PHONY: start-plone
-start-plone:		## Start the plone process
+start-plone:docker-compose.override.yml		## Start the plone process
 	docker-compose stop plone
 	docker-compose up -d zeo
 	docker-compose up -d plone
@@ -64,22 +71,22 @@ start-plone:		## Start the plone process
 	docker-compose exec plone gosu plone bin/instance fg
 
 .PHONY: start-frontend
-start-frontend:		## Start the frontend with Hot Module Reloading
+start-frontend:docker-compose.override.yml		## Start the frontend with Hot Module Reloading
 	docker-compose up -d frontend
 	docker-compose exec frontend npm run start
 
 .PHONY: frontend-shell
-frontend-shell:		## Start a shell on the frontend service
+frontend-shell:docker-compose.override.yml		## Start a shell on the frontend service
 	docker-compose up -d frontend
 	docker-compose exec frontend bash
 
 .PHONY: plone-shell
-plone-shell:		## Start a shell on the plone service
+plone-shell:docker-compose.override.yml		## Start a shell on the plone service
 	docker-compose up -d plone
 	docker-compose exec plone bash
 
 .PHONY: start-frontend-production
-start-frontend-production:		## Start the frontend service in production mode
+start-frontend-production:docker-compose.override.yml		## Start the frontend service in production mode
 	docker-compose up -d frontend
 	docker-compose exec frontend make build
 	docker-compose exec frontend yarn start:prod
