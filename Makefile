@@ -85,6 +85,12 @@ start-frontend:docker-compose.override.yml		## Start the frontend with Hot Modul
 	docker-compose up -d frontend
 	docker-compose exec frontend npm run start
 
+.PHONY: start-frontend-production
+start-frontend-production:docker-compose.override.yml		## Start the frontend service in production mode
+	docker-compose up -d frontend
+	docker-compose exec frontend make build
+	docker-compose exec frontend yarn start:prod
+
 .PHONY: frontend-shell
 frontend-shell:docker-compose.override.yml		## Start a shell on the frontend service
 	docker-compose up -d frontend
@@ -95,12 +101,6 @@ plone-shell:docker-compose.override.yml		## Start a shell on the plone service
 	docker-compose up -d plone
 	docker-compose exec plone gosu plone /docker-initialize.py
 	docker-compose exec plone bash
-
-.PHONY: start-frontend-production
-start-frontend-production:docker-compose.override.yml		## Start the frontend service in production mode
-	docker-compose up -d frontend
-	docker-compose exec frontend make build
-	docker-compose exec frontend yarn start:prod
 
 .PHONY: release-frontend
 release-frontend:		## Make a Docker Hub release for frontend
