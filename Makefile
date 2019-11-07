@@ -17,17 +17,11 @@ export BACKEND_IMAGE := $(shell cat $(BACKEND_DOCKERIMAGE_FILE))
 BACKEND_IMAGE_NAME := $(call image-name-split,$(BACKEND_IMAGE))
 
 ifneq "$(wildcard ${FRONTEND}/.)" ""
-	FRONTEND_DOCKERIMAGE_FILE := "${FRONTEND}/docker-image.txt"
-	export FRONTEND_IMAGE := $(shell cat $(FRONTEND_DOCKERIMAGE_FILE))
-	FRONTEND_IMAGE_NAME := $(call image-name-split,$(FRONTEND_IMAGE))
+FRONTEND_DOCKERIMAGE_FILE := "${FRONTEND}/docker-image.txt"
+export FRONTEND_IMAGE := $(shell cat $(FRONTEND_DOCKERIMAGE_FILE))
+FRONTEND_IMAGE_NAME := $(call image-name-split,$(FRONTEND_IMAGE))
 else
 endif
-
-define create_override
-	if [ ! -f 'docker-compose.override.yml' ]; then
-		cp 'tpl/docker-compose.override.$(1).yml' docker-compose.override.yml
-	fi
-endef
 
 docker-compose.override.yml:
 	@if [ ! -f 'docker-compose.override.yml' ]; then
@@ -52,11 +46,16 @@ setup-plone-data:
 	@echo "Setting data permission to uid 500"
 	sudo chown -R 500 plone-data
 
+ifeq "$(wildcard ${docker-compose.override.yml})" ""
+export HAS_PLONE_OVERRIDE := "$(shell cat docker-compose.override.yml | grep plone-data)"
+endif
+
 .PHONY: setup-backend-dev
-setup-backend-dev: setup-plone-data		## Setup needed for developing the backend
-	@if [ $(grep 'plone-data' docker-compose.override.yml) ne 0 ]; then \
-		$(call create_override,plone)
-	fi;
+setup-backend-dev: 		## Setup needed for developing the backend
+	@if [ -z $(HAS_PLONE_OVERRIDE) ]; then \
+		echo "Overwriting the docker-compose.override.yml file!"; \
+		cp 'tpl/docker-compose.override.plone.yml' docker-compose.override.yml; \
+	fi; \
 	mkdir -p src
 	sudo chown -R 500 src
 	docker-compose up -d plone
@@ -67,9 +66,9 @@ setup-backend-dev: setup-plone-data		## Setup needed for developing the backend
 
 .PHONY: setup-frontend-dev
 setup-frontend-dev:		## Setup needed for developing the frontend
-	@if [ ! -f docker-compose.override.yml) ne 0 ]; then \
-		$(call create_override,frontend)
-	fi;
+	@if [ ! -f "docker-compose.override.yml" ]; then \
+		cp 'tpl/docker-compose.override.frontend.yml' docker-compose.override.yml; \
+	fi
 	docker-compose up -d frontend
 	docker-compose exec frontend npm install
 
