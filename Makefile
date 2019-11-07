@@ -6,7 +6,7 @@ SHELL := /bin/bash
 
 image-name-split = $(firstword $(subst :, ,$1))
 
-SKELETON := "https://github.com/tiberiuichim/fullstack-skeleton.git"
+SKELETON := "https://github.com/eea/plone5-fullstack-skeleton.git"
 
 # identify project folders
 BACKEND := backend
@@ -40,8 +40,7 @@ init-submodules:
 	git submodule update; \
 	@if [ -d "${FRONTEND}" ]; then \
 		cd ${FRONTEND}; \
-		git submodule init; \
-		git submodule update
+		make init-submodules
 	else \
 		echo "No frontend folder"; \
 	fi; \
@@ -53,8 +52,8 @@ setup-data:		## Setup the datastorage for Zeo
 	@echo "Setting data permission to uid 500"
 	sudo chown -R 500 data
 
-.PHONY: setup-plone
-setup-plone: docker-compose.override.yml		## Setup products folder and Plone user
+.PHONY: setup-plone-dev
+setup-plone-dev: docker-compose.override.yml		## Setup needed for developing the backend
 	sudo chown -R 500 src
 	docker-compose up -d
 	docker-compose exec plone gosu plone bin/develop rb
@@ -69,8 +68,8 @@ start-plone:docker-compose.override.yml		## Start the plone process
 	docker-compose exec plone gosu plone /docker-initialize.py
 	docker-compose exec plone gosu plone bin/instance fg
 
-.PHONY: init-frontend-dev
-init-frontend-dev:docker-compose.override.yml init-submodules		## Start the frontend with Hot Module Reloading
+.PHONY: setup-frontend-dev
+setup-frontend-dev: docker-compose.override.yml init-submodules		## Setup needed for developing the frontend
 	docker-compose up -d frontend
 	docker-compose exec frontend npm install
 

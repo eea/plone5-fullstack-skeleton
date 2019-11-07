@@ -56,6 +56,11 @@ push:
 	docker tag $(IMAGE) $(NAME):latest
 	docker push $(NAME):latest
 
+.PHONY: init-submodules		## Initialize the git submodules
+init-submodules:
+	git submodule init
+	git submodule update
+
 .PHONY: help
 help:		## Show this help.
 	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)"

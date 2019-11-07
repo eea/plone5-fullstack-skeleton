@@ -2,11 +2,16 @@
 
 A place to put common files used to develop Plone 5 + Volto based projects.
 
-You can start using it by running:
+The idea is to have a central place of useful code and configuration that can
+provide a uniform developing experience.
+
+## Getting started on a new project
 
 ```sh
 bash -c "$(curl https://raw.githubusercontent.com/tiberiuichim/fullstack-skeleton/setup.sh)"
 ```
+
+## Keep your project updated to the common skeleton
 
 To keep up to date with it run:
 
