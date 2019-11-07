@@ -69,6 +69,11 @@ start-plone:docker-compose.override.yml		## Start the plone process
 	docker-compose exec plone gosu plone /docker-initialize.py
 	docker-compose exec plone gosu plone bin/instance fg
 
+.PHONY: init-frontend-dev
+init-frontend-dev:docker-compose.override.yml init-submodules		## Start the frontend with Hot Module Reloading
+	docker-compose up -d frontend
+	docker-compose exec frontend npm install
+
 .PHONY: start-frontend
 start-frontend:docker-compose.override.yml		## Start the frontend with Hot Module Reloading
 	docker-compose up -d frontend

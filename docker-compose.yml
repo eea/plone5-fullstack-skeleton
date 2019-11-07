@@ -20,13 +20,13 @@ services:
   frontend:
     image: "${FRONTEND_IMAGE:?no such variable}"
     environment:
-      RAZZLE_API_PATH: "http://localhost:${BACKEND_PORT}/${SITE_NAME:Plone}"
-      RAZZLE_INTERNAL_API_PATH: "http://plone:8080/${SITE_NAME:Plone}"
+      RAZZLE_API_PATH: "http://localhost:${BACKEND_PORT}/${SITE_NAME:-Plone}"
+      RAZZLE_INTERNAL_API_PATH: "http://plone:8080/${SITE_NAME:-Plone}"
       PORT: "${FRONTEND_PORT:-3000}"
     ports:
-      - "${FRONTEND_PORT:-3000}"
-      - "${FRONTEND_PORT_NEXT:-3001}"
-      - "${FRONTEND_ANALYZE_PORT:-8888}"
+      - "${FRONTEND_PORT:-3000}:${FRONTEND_PORT:-3000}"
+      - "${FRONTEND_PORT_NEXT:-3001}:${FRONTEND_PORT_NEXT:-3001}"
+      - "${FRONTEND_ANALYZE_PORT:-8888}:${FRONTEND_ANALYZE_PORT:-8888}"
     entrypoint: sh -c "tail -f /dev/null"
     volumes:
       - ./frontend:/opt/frontend/
