@@ -1,9 +1,0 @@
-version: "2.1"
-
-services:
-
-  frontend:
-    environment:
-      RAZZLE_API_PATH: "http://localhost:8085/fise"
-      RAZZLE_INTERNAL_API_PATH: "http://plone:8080/fise"
-      PORT: "3000"

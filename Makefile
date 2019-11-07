@@ -23,16 +23,16 @@ ifneq "$(wildcard ${FRONTEND}/.)" ""
 else
 endif
 
-docker-compose.override.yml:
-	@if [ ! -f 'docker-compose.override.yml' ]; then \
-		if [ -f 'docker-compose.override.example.yml' ]; then \
-			cp docker-compose.override.example.yml docker-compose.override.yml; \
-		fi; \
-	fi;
+define create_override
+	if [ ! -f 'docker-compose.override.yml' ]; then
+		cp 'tpl/docker-compose.override.$(1).yml' docker-compose.override.yml
+	fi
+endef
 
-.PHONY: bootstrap
-bootstrap: docker-compose.override.yml init-submodules setup-data setup-plone
-	@echo "bootstraping"
+docker-compose.override.yml:
+	@if [ ! -f 'docker-compose.override.yml' ]; then
+		$(error "You need to run a setup recipe first")
+	fi
 
 .PHONY: init-submodules
 init-submodules:
@@ -45,21 +45,33 @@ init-submodules:
 		echo "No frontend folder"; \
 	fi; \
 
-.PHONY: setup-data
-setup-data:		## Setup the datastorage for Zeo
-	mkdir -p data/filestorage
-	mkdir -p data/zeoserver
+.PHONY: setup-plone-data
+setup-plone-data:
+	mkdir -p plone-data/filestorage
+	mkdir -p plone-data/zeoserver
 	@echo "Setting data permission to uid 500"
-	sudo chown -R 500 data
+	sudo chown -R 500 plone-data
 
-.PHONY: setup-plone-dev
-setup-plone-dev: docker-compose.override.yml		## Setup needed for developing the backend
+.PHONY: setup-backend-dev
+setup-backend-dev: setup-plone-data		## Setup needed for developing the backend
+	@if [ $(grep 'plone-data' docker-compose.override.yml) ne 0 ]; then \
+		$(call create_override,plone)
+	fi;
+	mkdir -p src
 	sudo chown -R 500 src
-	docker-compose up -d
+	docker-compose up -d plone
 	docker-compose exec plone gosu plone bin/develop rb
 	docker-compose exec plone gosu plone /docker-initialize.py
 	docker-compose exec plone gosu plone bin/instance adduser admin admin
 	sudo chown -R `whoami` src/
+
+.PHONY: setup-frontend-dev
+setup-frontend-dev:		## Setup needed for developing the frontend
+	@if [ ! -f docker-compose.override.yml) ne 0 ]; then \
+		$(call create_override,frontend)
+	fi;
+	docker-compose up -d frontend
+	docker-compose exec frontend npm install
 
 .PHONY: start-plone
 start-plone:docker-compose.override.yml		## Start the plone process
@@ -67,11 +79,6 @@ start-plone:docker-compose.override.yml		## Start the plone process
 	docker-compose up -d plone
 	docker-compose exec plone gosu plone /docker-initialize.py
 	docker-compose exec plone gosu plone bin/instance fg
-
-.PHONY: setup-frontend-dev
-setup-frontend-dev: docker-compose.override.yml init-submodules		## Setup needed for developing the frontend
-	docker-compose up -d frontend
-	docker-compose exec frontend npm install
 
 .PHONY: start-frontend
 start-frontend:docker-compose.override.yml		## Start the frontend with Hot Module Reloading
