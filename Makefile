@@ -41,8 +41,8 @@ init-submodules:
 
 .PHONY: setup-plone-data
 setup-plone-data:
-	mkdir -p plone-data/filestorage
-	mkdir -p plone-data/zeoserver
+	sudo mkdir -p plone-data/filestorage
+	sudo mkdir -p plone-data/zeoserver
 	@echo "Setting data permission to uid 500"
 	sudo chown -R 500 plone-data
 
