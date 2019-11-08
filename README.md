@@ -12,7 +12,7 @@ provide a uniform developing experience.
 3. Add the skeleton files, using:
 
 ```sh
-bash -c "$(curl https://raw.githubusercontent.com/tiberiuichim/fullstack-skeleton/setup.sh)"
+curl https://raw.githubusercontent.com/eea/plone5-fullstack-skeleton/setup.sh | bash -
 ```
 
 You can now run `make help` to see the recipes that you have available.
