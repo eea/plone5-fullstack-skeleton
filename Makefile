@@ -142,7 +142,7 @@ sync-makefiles:		## Updates makefiles to latest github versions
 	@cp .skel/Makefile ./
 	@cp .skel/backend/Makefile ./backend/Makefile
 	@if [ -d "${FRONTEND}" ]; then \
-		cp .skel/frontend/Makefile ./frontend/; \
+		cp .skel/_frontend/Makefile ./frontend/; \
 	else \
 		echo "No frontend folder"; \
 	fi; \
