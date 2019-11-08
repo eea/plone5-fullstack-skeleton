@@ -28,9 +28,6 @@ services:
       - "${FRONTEND_PORT_NEXT:-3001}:${FRONTEND_PORT_NEXT:-3001}"
       - "${FRONTEND_ANALYZE_PORT:-8888}:${FRONTEND_ANALYZE_PORT:-8888}"
     entrypoint: sh -c "tail -f /dev/null"
-    volumes:
-      - ./frontend:/opt/frontend/
-      # - ./frontend/entrypoint-dev.sh:/opt/fise/entrypoint.sh
 
   zeo:
     image: plone:5.2-python2
