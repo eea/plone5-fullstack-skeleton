@@ -88,6 +88,10 @@ start-frontend:docker-compose.override.yml		## Start the frontend with Hot Modul
 	docker-compose up -d frontend
 	docker-compose exec frontend npm run start
 
+.PHONY: stop
+stop:		## Stop all services
+	docker-compose stop
+
 .PHONY: start-frontend-production
 start-frontend-production:docker-compose.override.yml		## Start the frontend service in production mode
 	docker-compose up -d frontend
