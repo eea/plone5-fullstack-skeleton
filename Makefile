@@ -54,7 +54,7 @@ endif
 	git clone $(SKELETON) .skel
 
 .PHONY: setup-backend-dev
-setup-backend-dev:.skel 		## Setup needed for developing the backend
+setup-backend-dev:setup-plone-data .skel 		## Setup needed for developing the backend
 	@if [ -z $(HAS_PLONE_OVERRIDE) ]; then \
 		echo "Overwriting the docker-compose.override.yml file!"; \
 		cp .skel/tpl/docker-compose.override.plone.yml docker-compose.override.yml; \
