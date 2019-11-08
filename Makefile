@@ -47,14 +47,17 @@ setup-plone-data:
 	sudo chown -R 500 plone-data
 
 ifeq "$(wildcard ${docker-compose.override.yml})" ""
-export HAS_PLONE_OVERRIDE := "$(shell cat docker-compose.override.yml | grep plone-data)"
+HAS_PLONE_OVERRIDE := "$(shell cat docker-compose.override.yml | grep plone-data)"
 endif
 
+.skel:
+	git clone $(SKELETON) .skel
+
 .PHONY: setup-backend-dev
-setup-backend-dev: 		## Setup needed for developing the backend
+setup-backend-dev:.skel 		## Setup needed for developing the backend
 	@if [ -z $(HAS_PLONE_OVERRIDE) ]; then \
 		echo "Overwriting the docker-compose.override.yml file!"; \
-		cp 'tpl/docker-compose.override.plone.yml' docker-compose.override.yml; \
+		cp .skel/tpl/docker-compose.override.plone.yml docker-compose.override.yml; \
 	fi; \
 	mkdir -p src
 	sudo chown -R 500 src
@@ -63,6 +66,7 @@ setup-backend-dev: 		## Setup needed for developing the backend
 	docker-compose exec plone gosu plone /docker-initialize.py
 	docker-compose exec plone gosu plone bin/instance adduser admin admin
 	sudo chown -R `whoami` src/
+	rm -rf .skel
 
 .PHONY: setup-frontend-dev
 setup-frontend-dev:		## Setup needed for developing the frontend
