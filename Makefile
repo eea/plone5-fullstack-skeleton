@@ -71,10 +71,17 @@ setup-backend-dev:setup-plone-data .skel 		## Setup needed for developing the ba
 .PHONY: setup-frontend-dev
 setup-frontend-dev:		## Setup needed for developing the frontend
 	@if [ ! -f "docker-compose.override.yml" ]; then \
-		cp 'tpl/docker-compose.override.frontend.yml' docker-compose.override.yml; \
+		cp tpl/docker-compose.override.frontend.yml docker-compose.override.yml; \
 	fi
 	docker-compose up -d frontend
 	docker-compose exec frontend npm install
+
+.PHONY: setup-fullstack-dev
+setup-fullstack-dev:setup-backend-dev skel		## Setup a fullstack developer
+	cp tpl/docker-compose.override.fullstack.yml docker-compose.override.yml
+	docker-compose up -d frontend
+	docker-compose exec frontend npm install
+	rm -rf .skel
 
 .PHONY: start-plone
 start-plone:docker-compose.override.yml		## Start the plone process

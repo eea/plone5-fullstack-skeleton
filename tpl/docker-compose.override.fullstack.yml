@@ -1,0 +1,15 @@
+version: "2.1"
+
+services:
+
+  zeo:
+    volumes:
+      - ./plone-data:/data
+
+  plone:
+    volumes:
+      - ./src:/plone/instance/src
+
+  frontend:
+    volumes:
+      - ./frontend:/opt/frontend
