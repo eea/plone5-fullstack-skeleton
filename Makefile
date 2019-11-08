@@ -105,7 +105,7 @@ plone-shell:docker-compose.override.yml		## Start a shell on the plone service
 release-frontend:		## Make a Docker Hub release for frontend
 	set -e;\
 		cd $(FRONTEND); \
-		&& make release
+		make release
 
 .PHONY: release-backend
 release-backend:		## Make a Docker Hub release for the Plone backend
