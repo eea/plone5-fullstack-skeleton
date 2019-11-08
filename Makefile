@@ -84,7 +84,7 @@ start-plone:docker-compose.override.yml		## Start the plone process
 	docker-compose exec plone gosu plone bin/instance fg
 
 .PHONY: start-frontend
-start-frontend:docker-compose.override.yml		## Start the frontend with Hot Module Reloading
+start-volto:docker-compose.override.yml		## Start the frontend with Hot Module Reloading
 	docker-compose up -d frontend
 	docker-compose exec frontend npm run start
 
@@ -93,13 +93,13 @@ stop:		## Stop all services
 	docker-compose stop
 
 .PHONY: start-frontend-production
-start-frontend-production:docker-compose.override.yml		## Start the frontend service in production mode
+start-volto-production:docker-compose.override.yml		## Start the frontend service in production mode
 	docker-compose up -d frontend
 	docker-compose exec frontend make build
 	docker-compose exec frontend yarn start:prod
 
 .PHONY: frontend-shell
-frontend-shell:docker-compose.override.yml		## Start a shell on the frontend service
+volto-shell:docker-compose.override.yml		## Start a shell on the frontend service
 	docker-compose up -d frontend
 	docker-compose exec frontend bash
 
