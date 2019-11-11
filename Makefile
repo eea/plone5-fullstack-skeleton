@@ -128,7 +128,7 @@ start-volto-production:docker-compose.override.yml		## Start the frontend servic
 	docker-compose exec frontend make build
 	docker-compose exec frontend yarn start:prod
 
-.PHONY: frontend-shell
+.PHONY: volto-shell
 volto-shell:docker-compose.override.yml		## Start a shell on the frontend service
 	docker-compose up -d frontend
 	docker-compose exec frontend bash
@@ -152,9 +152,15 @@ release-backend:		## Make a Docker Hub release for the Plone backend
 		make release
 
 .PHONY: build-backend
-build-backend:		## Make a Docker Hub release for the Plone backend
+build-backend:		## Just (re)build the backend image
 	set -e; \
 		cd $(BACKEND); \
+		make build-image
+
+.PHONY: build-frontend
+build-frontend:		## Just (re)build the frontend image
+	set -e; \
+		cd $(FRONTEND); \
 		make build-image
 
 .PHONY: eslint
