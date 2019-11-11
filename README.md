@@ -31,7 +31,7 @@ The backend boostrap process creates the `src` folder where the Plone developmen
 - `make plone-shell` to start a Plone docker container shell. This can be used to start the Plone instance manually, to debug code, or to rebuild the docker container buildout
 - `make release-backend` to release a new version of the Plone docker image.
 
-To create a new addon, you can run something like (please adjust according to intended package name and your user uid on the host machine (1000 is usually the default on desktop Linux distributions, but there's no standard).
+To create a new addon, you can run something like this: (please adjust according to intended package name and your user uid on the host machine - 1000 is usually the default on desktop Linux distributions, but there's no standard).
 
 ```
 pip install bobtemplates.plone
