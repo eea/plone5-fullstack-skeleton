@@ -17,12 +17,27 @@ curl https://raw.githubusercontent.com/eea/plone5-fullstack-skeleton/master/setu
 
 You can now run `make help` to see the recipes that you have available.
 
-The recipe that you will use depend on your intended role in the project: as
-a frontend or backend developer.
+Each developer that will work on the project needs to execute, once they clone your development repo, one of the following bootstraps, according to their role:
 
-For backend developing, run the `make setup-plone-dev` command. For frontend
-development, run `make setup-frontend-dev`. For fullstack developer, run `make
-setup-fullstack-dev`.
+- backend, run `make setup-plone-dev`
+- frontend, run `make setup-frontend-dev`
+- fullstack, run `make setup-fullstack-dev`. This executes both previous bootstraps and enables developing for both frontend and backend targets.
+
+### Developing for the backend
+
+The backend boostrap process creates the `src` folder where the Plone development packages are. Some useful commands are:
+
+- `make start-plone` to start the Plone process
+- `make plone-shell` to start a Plone docker container shell. This can be used to start the Plone instance manually, to debug code, or to rebuild the docker container buildout
+- `make release-backend` to release a new version of the Plone docker image.
+
+### Developing for the frontend
+
+The frontend development part is optional. Not all repositories using this skeleton need to have a Volto-powered backend. The frontend is developed in the `frontend` folder. Some useful commands:
+
+- `make start-volto` to start a hot-module reload enabled Volto
+- `make volto-shell` to start a shell inside the Volto container
+- `make release-frontend` to release a new version of the Volto (frontend) docker image.
 
 ## Keep your project updated to the common skeleton
 
