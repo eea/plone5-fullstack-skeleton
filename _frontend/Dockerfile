@@ -9,13 +9,14 @@ WORKDIR /opt/frontend/
 
 COPY docker-image.txt /
 COPY package.json .
-RUN NPM_CONFIG_REGISTRY=http://192.168.0.144:4873 npm install
+
+RUN NPM_CONFIG_REGISTRY=http://127.0.0.1:4873 npm install
 
 COPY . .
 RUN rm -f package.json.lock
 
-RUN NODE_OPTIONS=--max_old_space_size=4096 RAZZLE_API_PATH=VOLTO_API_PATH RAZZLE_INTERNAL_API_PATH=VOLTO_INTERNAL_API_PATH yarn build
-
+# RUN NODE_OPTIONS=--max_old_space_size=4096 RAZZLE_API_PATH=VOLTO_API_PATH RAZZLE_INTERNAL_API_PATH=VOLTO_INTERNAL_API_PATH yarn build
+#
 COPY entrypoint-prod.sh entrypoint.sh
 RUN chmod +x entrypoint.sh
 
