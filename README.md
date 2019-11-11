@@ -1,9 +1,9 @@
-# Volto-based generic fullstack skeleton
+# Volto/Plone-based generic fullstack development skeleton
 
-A place to put common files used to develop Plone 5 + Volto based projects.
+A place to put common files used to develop Plone 5 + Volto based projects. 
 
 The idea is to have a central place of useful code and configuration that can
-provide a uniform developing experience.
+provide a uniform developing experience. Stacks generated from this skeleton are not intended to be used in production, only for development. A production setup might be later provided as part of this skeleton.
 
 ## Getting started on a new project
 
