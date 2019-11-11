@@ -54,7 +54,8 @@ HAS_FRONTEND_OVERRIDE := $(shell cat docker-compose.override.yml | grep frontend
 endif
 
 .skel:
-	git clone $(SKELETON) .skel
+	@rm -rf ./.skel
+	@git clone ${SKELETON} .skel
 
 .PHONY: plone_override
 plone_override:.skel
@@ -180,9 +181,7 @@ clean-releases:		## Cleanup space by removing old docker images
 	sh -c "docker images | grep ${FRONTEND_IMAGE_NAME} | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi ${FRONTEND_IMAGE_NAME}:{}"
 
 .PHONY: sync-makefiles
-sync-makefiles:		## Updates makefiles to latest github versions
-	@rm -rf ./.skel
-	@git clone ${SKELETON} .skel
+sync-makefiles:.skel		## Updates makefiles to latest github versions
 	@cp .skel/Makefile ./
 	@cp .skel/backend/Makefile ./backend/Makefile
 	@if [ -d "${FRONTEND}" ]; then \
@@ -193,7 +192,7 @@ sync-makefiles:		## Updates makefiles to latest github versions
 	rm -rf ./.skel
 
 .PHONY: sync-dockercompose
-sync-dockercompose:		## Updates docker-compose.yml to latest github versions
+sync-dockercompose:.skel		## Updates docker-compose.yml to latest github versions
 	git clone ${SKELETON} .skel
 	cp .skel/docker-compose.yml ./
 	rm -rf ./.skel
