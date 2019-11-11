@@ -202,6 +202,11 @@ sync-dockercompose:		## Updates docker-compose.yml to latest github versions
 shell:		## Starts a shell with proper env set
 	$(SHELL)
 
+.PHONY: start-npm-cache
+start-npm-cache:		## Starts the Verdacio NPM cache
+	cd ${FRONTEND}; \
+	PATH=$(HOME)/.node_modules/bin:$(PATH) verdaccio -l 0.0.0.0:4873 -c verdaccio-config.yaml
+
 .PHONY: help
 help:		## Show this help.
 	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)"
