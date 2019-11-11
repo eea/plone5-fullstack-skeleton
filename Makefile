@@ -46,11 +46,11 @@ plone-data:
 	sudo chown -R 500 plone-data
 
 ifeq "$(wildcard ${docker-compose.override.yml})" ""
-HAS_PLONE_OVERRIDE := "$(shell cat docker-compose.override.yml | grep plone-data)"
+HAS_PLONE_OVERRIDE := $(shell cat docker-compose.override.yml | grep plone-data)
 endif
 
 ifeq "$(wildcard ${docker-compose.override.yml})" ""
-HAS_FRONTEND_OVERRIDE := "$(shell cat docker-compose.override.yml | grep frontend)"
+HAS_FRONTEND_OVERRIDE := $(shell cat docker-compose.override.yml | grep frontend)
 endif
 
 .skel:
