@@ -9,3 +9,4 @@ services:
   plone:
     volumes:
       - ./src:/plone/instance/src
+      - ./backend/site.cfg:/plone/instance/site.cfg
