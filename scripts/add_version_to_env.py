@@ -5,7 +5,7 @@ import os
 import shutil
 
 
-def add_version(image, path):
+def add_version(var_name, version_file_path):
     if not os.path.isfile('.env'):
         if os.path.isfile('.env.example'):
             shutil.copyfile('.env.example', '.env')
@@ -20,17 +20,19 @@ def add_version(image, path):
     out = []
 
     found = False
+    with open(version_file_path) as v:
+        docker_image_name = v.read().strip()
 
     for line in lines:
-        if (not found) and line.startswith(image + '='):
-            line = image + '=' + path
+        if (not found) and line.startswith(var_name + '='):
+            line = var_name + '=' + docker_image_name
             found = True
 
         if line.strip():
             out.append(line)
 
     if not found:
-        line = image + '=' + path
+        line = var_name + '=' + docker_image_name
         out.append(line)
 
     shutil.copyfile('.env', '.env.old')
