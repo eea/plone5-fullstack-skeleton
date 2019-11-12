@@ -48,7 +48,10 @@ The `backend/site.cfg` file is mapped as a docker volume. If you change this fil
 make shell
 docker-compose restart plone
 ```
-
+If you brind new development packages, you need to fix permissions in the `src/` folder, by running:
+```
+sudo chown -R `whoami` src/
+```
 ### Developing for the frontend
 
 The frontend development part is optional. Not all repositories using this skeleton need to have a Volto-powered backend. The frontend is developed in the `frontend` folder. Some useful commands:
