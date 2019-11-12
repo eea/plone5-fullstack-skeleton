@@ -191,7 +191,7 @@ sync-makefiles:.skel		## Updates makefiles to latest github versions
 		cp .skel/_frontend/Makefile ./frontend/; \
 	else \
 		echo "No frontend folder"; \
-	fi; \
+	fi;
 	@rm -rf ./.skel
 	@echo "Sync completed"
 
