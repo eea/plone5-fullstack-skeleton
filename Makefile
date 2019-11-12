@@ -145,6 +145,7 @@ release-frontend:		## Make a Docker Hub release for frontend
 	set -e;\
 		cd $(FRONTEND); \
 		make release; \
+		cd -; \
 		scripts/add_version_to_env.py --file ${FRONTEND}/docker-image.txt --name FRONTEND_IMAGE
 
 .PHONY: release-backend
@@ -152,6 +153,7 @@ release-backend:		## Make a Docker Hub release for the Plone backend
 	set -e; \
 		cd $(BACKEND); \
 		make release; \
+		cd -; \
 		scripts/add_version_to_env.py --file ${BACKEND}/docker-image.txt --name BACKEND_IMAGE
 
 .PHONY: build-backend
