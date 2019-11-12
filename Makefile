@@ -144,13 +144,15 @@ plone-shell:docker-compose.override.yml		## Start a shell on the plone service
 release-frontend:		## Make a Docker Hub release for frontend
 	set -e;\
 		cd $(FRONTEND); \
-		make release
+		make release; \
+		scripts/add_version_to_env.py --file ${FRONTEND}/docker-image.txt --name FRONTEND_IMAGE
 
 .PHONY: release-backend
 release-backend:		## Make a Docker Hub release for the Plone backend
 	set -e; \
 		cd $(BACKEND); \
-		make release
+		make release; \
+		scripts/add_version_to_env.py --file ${BACKEND}/docker-image.txt --name BACKEND_IMAGE
 
 .PHONY: build-backend
 build-backend:		## Just (re)build the backend image
@@ -184,12 +186,14 @@ clean-releases:		## Cleanup space by removing old docker images
 sync-makefiles:.skel		## Updates makefiles to latest github versions
 	@cp .skel/Makefile ./
 	@cp .skel/backend/Makefile ./backend/Makefile
+	@cp -i .skel/scripts/* ./scripts/
 	@if [ -d "${FRONTEND}" ]; then \
 		cp .skel/_frontend/Makefile ./frontend/; \
 	else \
 		echo "No frontend folder"; \
 	fi; \
-	rm -rf ./.skel
+	@rm -rf ./.skel
+	@echo "Sync completed"
 
 .PHONY: sync-dockercompose
 sync-dockercompose:.skel		## Updates docker-compose.yml to latest github versions

@@ -4,11 +4,13 @@ import argparse
 import os
 import shutil
 
+
 def add_version(image, path):
     if not os.path.isfile('.env'):
         if os.path.isfile('.env.example'):
             shutil.copyfile('.env.example', '.env')
         else:
+            print("No existing .env file, creating a new one")
             with open('.env', 'w') as f:
                 f.write('')
 
@@ -20,7 +22,7 @@ def add_version(image, path):
     found = False
 
     for line in lines:
-        if (not found) and line.startswith(image+'='):
+        if (not found) and line.startswith(image + '='):
             line = image + '=' + path
             found = True
 
@@ -35,10 +37,15 @@ def add_version(image, path):
     with open('.env', 'w') as f:
         f.write('\n'.join(out))
 
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Add image path to .env')
-    parser.add_argument("--file", required=True, type=str, help="Path to txt file")
-    parser.add_argument("--name", required=True, type=str, help="Environment variable name")
+    parser = argparse.ArgumentParser(
+        description='Write released docker image name to .env file'
+    )
+    parser.add_argument("--file", required=True,
+                        type=str, help="Path to txt file")
+    parser.add_argument("--name", required=True, type=str,
+                        help="Environment variable name")
     args = parser.parse_args()
 
     add_version(args.name, args.file)
