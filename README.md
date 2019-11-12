@@ -69,10 +69,12 @@ The frontend development part is optional. Not all repositories using this skele
 
 ### Troubleshooting
 
-In case complaining about not able to bind ports, you need to set another port in the .env file:
+- `Bind for 0.0.0.0:8888 failed: port is already allocated`: you need to use another port for binding, see `.env`
+- `sh: 1: razzle: not found` when trying to run `make start-volto`: you're probably started mapping the frontend folder to container, so you need to do:
 
 ```
-ERROR: for energy_union_frontend_1  Cannot start service frontend: driver failed programming external connectivity on endpoint energy_union_frontend_1 (...): Bind for 0.0.0.0:8888 failed: port is already allocated
+make volto-shell
+npm install
 ```
 
 ## Keep your project updated to the common skeleton
