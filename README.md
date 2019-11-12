@@ -67,6 +67,14 @@ The frontend development part is optional. Not all repositories using this skele
 - `make volto-shell` to start a shell inside the Volto container
 - `make release-frontend` to release a new version of the Volto (frontend) docker image.
 
+### Troubleshooting
+
+In case complaining about not able to bind ports, you need to set another port in the .env file:
+
+```
+ERROR: for energy_union_frontend_1  Cannot start service frontend: driver failed programming external connectivity on endpoint energy_union_frontend_1 (...): Bind for 0.0.0.0:8888 failed: port is already allocated
+```
+
 ## Keep your project updated to the common skeleton
 
 To keep up to date with it run:
