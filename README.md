@@ -67,6 +67,16 @@ The frontend development part is optional. Not all repositories using this skele
 - `make volto-shell` to start a shell inside the Volto container
 - `make release-frontend` to release a new version of the Volto (frontend) docker image.
 
+### Troubleshooting
+
+- `Bind for 0.0.0.0:8888 failed: port is already allocated`: you need to use another port for binding, see `.env`
+- `sh: 1: razzle: not found` when trying to run `make start-volto`: you're probably started mapping the frontend folder to container, so you need to do:
+
+```
+make volto-shell
+npm install
+```
+
 ## Keep your project updated to the common skeleton
 
 To keep up to date with it run:
