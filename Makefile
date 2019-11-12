@@ -142,18 +142,18 @@ plone-shell:docker-compose.override.yml		## Start a shell on the plone service
 
 .PHONY: release-frontend
 release-frontend:		## Make a Docker Hub release for frontend
-	set -e;\
+	set -x;\
 		cd $(FRONTEND); \
 		make release; \
-		cd -; \
+		cd ..; \
 		scripts/add_version_to_env.py --file ${FRONTEND}/docker-image.txt --name FRONTEND_IMAGE
 
 .PHONY: release-backend
 release-backend:		## Make a Docker Hub release for the Plone backend
-	set -e; \
+	set -x; \
 		cd $(BACKEND); \
 		make release; \
-		cd -; \
+		cd ..; \
 		scripts/add_version_to_env.py --file ${BACKEND}/docker-image.txt --name BACKEND_IMAGE
 
 .PHONY: build-backend
