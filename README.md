@@ -17,7 +17,7 @@ curl https://raw.githubusercontent.com/eea/plone5-fullstack-skeleton/master/setu
 
 You can now run `make help` to see the recipes that you have available.
 
-Each developer that will work on the project needs to execute, once they clone your development repo, one of the following bootstraps, according to their role:
+Each developer that will work on the project needs to execute (after they clone your development repo) one of the following bootstrap targets, according to their role:
 
 - backend, run `make setup-plone-dev`
 - frontend, run `make setup-frontend-dev`
