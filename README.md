@@ -42,6 +42,13 @@ cd -
 chown -R 1000 src
 ```
 
+The `backend/site.cfg` file is mapped as a docker volume. If you change this file, the plone container needs to be restarted:
+
+```
+make shell
+docker-compose restart plone
+```
+
 ### Developing for the frontend
 
 The frontend development part is optional. Not all repositories using this skeleton need to have a Volto-powered backend. The frontend is developed in the `frontend` folder. Some useful commands:
