@@ -30,14 +30,7 @@ docker-compose.override.yml:
 
 .PHONY: init-submodules
 init-submodules:
-	git submodule init; \
-	git submodule update; \
-	@if [ -d "${FRONTEND}" ]; then \
-		cd ${FRONTEND}; \
-		make init-submodules
-	else \
-		echo "No frontend folder"; \
-	fi; \
+	git submodule update --init -- recursive
 
 plone-data:
 	sudo mkdir -p plone-data/filestorage
