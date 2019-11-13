@@ -1,7 +1,7 @@
 #!/bin/sh
 
 rm -rf .skel
-git clone https://github.com/eea/plone5-fullstack-skeleton .skel
+git clone https://github.com/eea/plone5-fullstack-skeleton.git .skel
 
 if [ -d frontend ]; then
   mv .skel/_frontend/* ./frontend/
