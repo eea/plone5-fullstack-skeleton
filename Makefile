@@ -73,7 +73,7 @@ setup-backend-dev:plone_override plone_install 		## Setup needed for developing 
 
 .PHONY: frontend_override
 frontend_override:.skel
-	@if [ -z $(HAS_FRONTEND_OVERRIDE) ]; then \
+	@if [ -z "$(HAS_FRONTEND_OVERRIDE)" ]; then \
 		echo "Overwriting the docker-compose.override.yml file!"; \
 		cp .skel/tpl/docker-compose.override.frontend.yml docker-compose.override.yml; \
 	fi;
