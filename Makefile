@@ -183,9 +183,10 @@ sync-makefiles:.skel		## Updates makefiles to latest github versions
 	@cp .skel/backend/Makefile ./backend/Makefile
 	@cp -i .skel/scripts/* ./scripts/
 	@if [ -d "${FRONTEND}" ]; then \
-		cp .skel/_frontend/Makefile ./frontend/; \
+		cp -i .skel/_frontend/Makefile ./frontend/; \
+		cp -i .skel/_frontend/pkg_helper.py ./frontend/; \
 	else \
-		echo "No frontend folder"; \
+		echo "No frontend folder, skipping"; \
 	fi; \
 	rm -rf ./.skel; \
 	echo "Sync completed"
