@@ -30,7 +30,7 @@ docker-compose.override.yml:
 
 .PHONY: init-submodules
 init-submodules:
-	git submodule update --init -- recursive
+	git submodule update --init --recursive
 
 plone-data:
 	sudo mkdir -p plone-data/filestorage
