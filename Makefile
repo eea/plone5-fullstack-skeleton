@@ -80,8 +80,13 @@ frontend_override:.skel
 
 .PHONY: frontend_install
 frontend_install:
+	echo ""
+	echo "Running frontend_install target"
+	echo ""
 	docker-compose up -d frontend
 	docker-compose exec frontend npm install
+	echo "Make sure that your frontend has mr.developer support"
+	docker-compose exec frontend npm run develop
 
 .PHONY: setup-frontend-dev
 setup-frontend-dev:frontend_override frontend_install		## Setup needed for developing the frontend
