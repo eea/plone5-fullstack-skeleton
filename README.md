@@ -73,6 +73,7 @@ While that is possible, there's another simpler way available: have "volto" (act
 
 So, to recap:
 
+- create the new package as a standalone react component package. Something like this could probably work: https://github.com/NGimhana/sample_react_component_library_boilerplate
 - install the `mr.developer` package: `npm install -g mr.developer`
 - customize the `mr.developer.json` file, to add the new addon repo path
 - Add the `develop` script target in `package.json`: `develop": "mrdeveloper --config=jsconfig.json --no-config --output=addons`
