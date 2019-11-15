@@ -17,7 +17,7 @@ activate:		## Activate an addon package for development
 		echo "Running npm install in src/addons/${pkg}";\
 		cd "src/addons/${pkg}";\
 		npm install;\
-		echo "Done."\
+		echo "Done.;"\
 	fi
 
 .PHONY: deactivate
