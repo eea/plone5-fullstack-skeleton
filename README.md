@@ -67,6 +67,18 @@ The frontend development part is optional. Not all repositories using this skele
 - `make volto-shell` to start a shell inside the Volto container
 - `make release-frontend` to release a new version of the Volto (frontend) docker image.
 
+When developing a new frontend addon, the end goal is to have it available standalone, as an npm released package. The "classic" option would be to run `npm link` inside the package, then link it inside the frontend node_modules with `npm link packagename`. This requires that you also transpile and bundle the code inside that package, usually achieved with webpack configured with babel loaders.
+
+While that is possible, there's another simpler way available: have "volto" (actually volto's razzle/webpack/babel presets) compile that code and alias that module's path in volto. Volto documentation recommends `mr.developer` as a tool that, given a configuration file with package definitions, it can clone those packages in the `src/addons` folder. Then the `jsconfig.json`, `.eslintrc` and `package.json` files need to be adjusted to include aliases for the new addon package. 
+
+To facilitate activating/deactivating these addon package, inside the `frontend` folder, run the following commands to activate and deactivate packages:
+
+```
+make activate pkg=<pkgname>
+make deactivate pkg=<pkgname>
+```
+You then needs to restart the frontend server process.
+
 ### Troubleshooting
 
 - `Bind for 0.0.0.0:8888 failed: port is already allocated`: you need to use another port for binding, see the `.env` file
