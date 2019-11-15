@@ -71,7 +71,13 @@ When developing a new frontend addon, the end goal is to have it available stand
 
 While that is possible, there's another simpler way available: have "volto" (actually volto's razzle/webpack/babel presets) compile that code and alias that module's path in volto. Volto documentation recommends `mr.developer` as a tool that, given a configuration file with package definitions, it can clone those packages in the `src/addons` folder. Then the `jsconfig.json`, `.eslintrc` and `package.json` files need to be adjusted to include aliases for the new addon package. 
 
-To facilitate activating/deactivating these addon package, inside the `frontend` folder, run the following commands to activate and deactivate packages:
+So, to recap:
+
+- install the `mr.developer` package: `npm install -g mr.developer`
+- customize the `mr.developer.json` file, to add the new addon repo path
+- Add the `develop` script target in `package.json`: `develop": "mrdeveloper --config=jsconfig.json --no-config --output=addons`
+- run `npm run develop`
+- activate/deactivate the new package by running, inside the `frontend` folder, the following commands:
 
 ```
 make activate pkg=<pkgname>
