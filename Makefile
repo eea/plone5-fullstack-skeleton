@@ -115,7 +115,7 @@ start-plone:docker-compose.override.yml		## Start the plone process
 .PHONY: start-volto
 start-volto:docker-compose.override.yml		## Start the frontend with Hot Module Reloading
 	docker-compose up -d frontend
-	docker-compose exec frontend npm run start
+	docker-compose exec frontend sh -c "NODE_OPTIONS=--max_old_space_size=4096 npm run start"
 
 .PHONY: stop
 stop:		## Stop all services
