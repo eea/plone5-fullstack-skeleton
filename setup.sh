@@ -19,4 +19,8 @@ fi
 if [ ! -f README.md ]; then
   mv .skel/tpl/README.md.tpl README.md
 fi
+
+cp -i .skel/Makefile ./Makefile
+cp -i .skel/docker-compose.yml ./docker-compose.yml
+
 rm -rf .skel
