@@ -52,7 +52,7 @@ endif
 
 .PHONY: plone_override
 plone_override:.skel
-	@if [ -z $(HAS_PLONE_OVERRIDE) ]; then \
+	@if [ -z "$(HAS_PLONE_OVERRIDE)" ]; then \
 		echo "Overwriting the docker-compose.override.yml file!"; \
 		cp .skel/tpl/docker-compose.override.plone.yml docker-compose.override.yml; \
 	fi
@@ -73,7 +73,7 @@ setup-backend-dev:plone_override plone_install 		## Setup needed for developing 
 
 .PHONY: frontend_override
 frontend_override:.skel
-	@if [[ -z $(HAS_FRONTEND_OVERRIDE) ]]; then \
+	@if [[ -z "$(HAS_FRONTEND_OVERRIDE)" ]]; then \
 		echo "Overwriting the docker-compose.override.yml file!"; \
 		cp .skel/tpl/docker-compose.override.frontend.yml docker-compose.override.yml; \
 	fi;
@@ -94,8 +94,8 @@ setup-frontend-dev:frontend_override frontend_install		## Setup needed for devel
 
 .PHONY: fullstack_override
 fullstack_override:.skel
-	@if [[ -z $(HAS_PLONE_OVERRIDE) ]]; then \
-		if [[ -z $(HAS_FRONTEND_OVERRIDE) ]]; then \
+	@if [[ -z "$(HAS_PLONE_OVERRIDE)" ]]; then \
+		if [[ -z "$(HAS_FRONTEND_OVERRIDE)" ]]; then \
 			echo "Overwriting the docker-compose.override.yml file!"; \
 			cp .skel/tpl/docker-compose.override.fullstack.yml docker-compose.override.yml; \
 		fi; \
