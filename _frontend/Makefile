@@ -5,8 +5,6 @@ DOCKERIMAGE_FILE="docker-image.txt"
 NAME := $(call image-name-split,$(shell cat $(DOCKERIMAGE_FILE)), 1)
 IMAGE=$(shell cat $(DOCKERIMAGE_FILE))
 
-# VOLTO_ADDONS=$(shell ./pkg_helper.py list)
-
 .DEFAULT_GOAL := help
 
 .PHONY: activate
@@ -23,7 +21,7 @@ activate:		## Activate an addon package for development
 			export VOLTO_ADDONS=`./pkg_helper.py list`;\
 			read -ra ADDR <<< "$${VOLTO_ADDONS}"; \
 			for pkg in "$${ADDR[@]}"; do \
-				echo "removing $${pkg}"; \
+				echo "removing node_modules/$${pkg}"; \
 				rm -rf "./node_modules/$${pkg}";\
 			done; \
 			echo "Done.";\
@@ -36,7 +34,7 @@ clean-addons:
 		export VOLTO_ADDONS=`./pkg_helper.py list`;\
 		read -ra ADDR <<< "$${VOLTO_ADDONS}"; \
 		for pkg in "$${ADDR[@]}"; do \
-			echo "removing $${pkg}"; \
+			echo "removing node_modules/$${pkg}"; \
 			rm -rf "./node_modules/$${pkg}";\
 		done; \
 
