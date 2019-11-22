@@ -63,6 +63,9 @@ clean:
 
 .PHONY: build
 build:
+	echo "";\
+	echo "Make sure that you have the npm cache (Verdaccio) running!";\
+	echo "";\
 	DEBUG= \
 				 NODE_OPTIONS=--max_old_space_size=4096 \
 				 RAZZLE_API_PATH=VOLTO_API_PATH \
