@@ -78,10 +78,10 @@ frontend_override:.skel
 		cp .skel/tpl/docker-compose.override.frontend.yml docker-compose.override.yml; \
 	fi;
 
-.PHONY: frontend_install
-frontend_install:
+.PHONY: frontend-install
+frontend-install:		## Activates frontend modules for development
 	@echo ""
-	@echo "Running frontend_install target"
+	@echo "Running frontend-install target"
 	@echo ""
 	docker-compose up -d frontend
 	docker-compose exec frontend npm run develop
@@ -90,7 +90,7 @@ frontend_install:
 	docker-compose exec frontend make clean-addons
 
 .PHONY: setup-frontend-dev
-setup-frontend-dev:init-submodules frontend_override frontend_install		## Setup needed for developing the frontend
+setup-frontend-dev:init-submodules frontend_override frontend-install		## Setup needed for developing the frontend
 	rm -rf .skel
 
 .PHONY: fullstack_override
@@ -103,7 +103,7 @@ fullstack_override:.skel
 	fi;
 
 .PHONY: setup-fullstack-dev
-setup-fullstack-dev:fullstack_override plone_install frontend_install		## Setup a fullstack developer
+setup-fullstack-dev:fullstack_override plone_install frontend-install		## Setup a fullstack developer
 	rm -rf .skel
 
 .PHONY: start-plone
