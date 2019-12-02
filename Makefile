@@ -180,8 +180,9 @@ eslint:		## Run eslint --fix on all *.js, *.json, *.jsx files in src
 
 .PHONY: clean-releases
 clean-releases:		## Cleanup space by removing old docker images
-	sh -c "docker images | grep ${BACKEND_IMAGE_NAME} | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi ${BACKEND_IMAGE_NAME}:{}"
-	sh -c "docker images | grep ${FRONTEND_IMAGE_NAME} | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi ${FRONTEND_IMAGE_NAME}:{}"
+	set -e; \
+		sh -c "docker images | grep ${BACKEND_IMAGE_NAME} | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi ${BACKEND_IMAGE_NAME}:{}" || \
+		sh -c "docker images | grep ${FRONTEND_IMAGE_NAME} | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi ${FRONTEND_IMAGE_NAME}:{}"
 
 .PHONY: sync-makefiles
 sync-makefiles:.skel		## Updates makefiles to latest github versions
