@@ -18,12 +18,12 @@ activate:		## Activate an addon package for development
 		else \
 			./pkg_helper.py --target=${pkg} activate;\
 			echo "Running npm install src/addons/${pkg}";\
-			npm install "src/addons/${pkg}";\
+			npm install "src/addons/$${pkg}";\
 			echo "Cleaning up after npm install";\
 			export VOLTO_ADDONS=`./pkg_helper.py list`;\
 			read -ra ADDR <<< "$${VOLTO_ADDONS}"; \
 			for pkg in "$${ADDR[@]}"; do \
-				echo "removing $${pkg}"; \
+				echo "removing node_modules/$${pkg}"; \
 				rm -rf "./node_modules/$${pkg}";\
 			done; \
 			echo "Done.";\
@@ -36,7 +36,7 @@ clean-addons:
 		export VOLTO_ADDONS=`./pkg_helper.py list`;\
 		read -ra ADDR <<< "$${VOLTO_ADDONS}"; \
 		for pkg in "$${ADDR[@]}"; do \
-			echo "removing $${pkg}"; \
+			echo "removing node_modules/$${pkg}"; \
 			rm -rf "./node_modules/$${pkg}";\
 		done; \
 
