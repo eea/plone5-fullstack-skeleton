@@ -1,1 +1,1 @@
-tiberiuichim/something-frontend:4.0-0.1
+tiberiuichim/volto-generic-frontend:4.0-0.1
