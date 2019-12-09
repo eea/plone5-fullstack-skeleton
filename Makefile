@@ -84,6 +84,7 @@ frontend-install:		## Activates frontend modules for development
 	@echo "Running frontend-install target"
 	@echo ""
 	docker-compose up -d frontend
+	docker-compose exec frontend npm install mr-developer
 	docker-compose exec frontend npm run develop
 	docker-compose exec frontend make activate-all
 	docker-compose exec frontend npm install
