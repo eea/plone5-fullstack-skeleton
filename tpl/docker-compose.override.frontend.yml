@@ -5,3 +5,4 @@ services:
   frontend:
     volumes:
       - ./frontend:/opt/frontend
+      - ./.git:/opt/.git
