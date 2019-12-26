@@ -54,6 +54,8 @@ def activate(target):
         paths[target] = ["addons/{}/src".format(target)]
         o['compilerOptions']['paths'] = paths
 
+    o['addons'] = (o.get('addons') or []) + [target]
+
     with open('jsconfig.json', 'w') as f:
         f.write(json.dumps(o, indent=4, sort_keys=True))
 
@@ -108,6 +110,7 @@ def deactivate(target):
                 .get('compilerOptions', {}) \
                 .get('paths', {}):
             del j['compilerOptions']['paths'][target]
+            j['addons'] = [n for n in j.get('addons', []) if n != target]
 
             with open('jsconfig.json', 'w') as f:
                 f.write(json.dumps(j, sort_keys=True, indent=4))
