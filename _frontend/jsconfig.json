@@ -1,0 +1,9 @@
+{
+    "addons": [
+    ],
+    "compilerOptions": {
+        "baseUrl": "src",
+        "paths": {
+        }
+    }
+}

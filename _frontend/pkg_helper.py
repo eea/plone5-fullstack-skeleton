@@ -43,9 +43,14 @@ def activate(target):
         sys.exit(137)
 
     if 'compilerOptions' not in o:
+        targetpath = "addons/{}/src".format(target)
+
+        if target == "@plone/volto":
+            targetpath = "addons/volto"
+
         o['compilerOptions'] = {
             "paths": {
-                target: ["addons/{}/src".format(target)]
+                target: [targetpath]
             },
             "baseUrl": "src"
         }
@@ -53,8 +58,6 @@ def activate(target):
         paths = o['compilerOptions'].get('paths', {})
         paths[target] = ["addons/{}/src".format(target)]
         o['compilerOptions']['paths'] = paths
-
-    o['addons'] = (o.get('addons') or []) + [target]
 
     with open('jsconfig.json', 'w') as f:
         f.write(json.dumps(o, indent=4, sort_keys=True))
@@ -110,7 +113,6 @@ def deactivate(target):
                 .get('compilerOptions', {}) \
                 .get('paths', {}):
             del j['compilerOptions']['paths'][target]
-            j['addons'] = [n for n in j.get('addons', []) if n != target]
 
             with open('jsconfig.json', 'w') as f:
                 f.write(json.dumps(j, sort_keys=True, indent=4))
@@ -151,7 +153,16 @@ def activate_all():
 
     for name in j.keys():
         activate(name)
-        subprocess.call(['npm', 'install', 'src/addons/{}'.format(name)])
+
+        if name == "@plone/volto":
+            continue
+
+        pkgdir = os.path.join('src/addons/', format(name))
+
+        if os.path.exists(pkgdir) and os.path.isdir(pkgdir):
+            subprocess.call(['rm', 'package-lock.json'], cwd=pkgdir)
+            subprocess.call(['npm', 'install'], cwd=pkgdir)
+            subprocess.call(['rm', 'package-lock.json'], cwd=pkgdir)
 
 
 def list_addons():
