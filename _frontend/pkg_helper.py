@@ -25,7 +25,9 @@ def _get_base_dir():
 def activate(target):
     """ Activates a package: write the required files for this
     """
+
     nm_folder = 'src/addons/{}/node_modules'.format(target)
+    paths = ''
 
     if os.path.exists(nm_folder):
         shutil.rmtree(nm_folder)
@@ -87,7 +89,14 @@ def activate(target):
     fmap.append([target, "./src/addons/{}/src".format(target)])
     j['settings']['import/resolver']['alias']['map'] = fmap
 
-    with open('.eslintrc', 'w') as f:
+    eslintrc_namespace = '.eslintrc'
+
+    if target in paths.keys():
+        eslintrc_namespace = 'src/addons/{}/./.eslintrc'.format(target)
+        for alias_pair in j['settings']['import/resolver']['alias']['map']:
+            alias_pair[1] = '../../.' + alias_pair[1]
+
+    with open(eslintrc_namespace, 'w') as f:
         f.write(json.dumps(j, indent=4, sort_keys=True))
 
     print("Activated package: {}".format(target))
