@@ -20,7 +20,7 @@ activate:		## Activate an addon package for development
 			echo "Running npm install in src/addons/${pkg}";\
 			cd "src/addons/$${pkg}";\
 			npm install;\
-			cd -;\
+			cd ../..;\
 			echo "Cleaning up after npm install";\
 			export VOLTO_ADDONS=`./pkg_helper.py list`;\
 			read -ra ADDR <<< "$${VOLTO_ADDONS}"; \
@@ -122,3 +122,9 @@ develop:		## Runs "git pull" in all addons
 .PHONY: help
 help:		## Show this help.
 	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)"
+
+.PHONY: build-production
+try-production:		## Build production bundle
+	yarn build
+	./entrypoint-dev.sh
+	echo "Now run: node build/server.js"
