@@ -84,7 +84,6 @@ frontend-install:		## Activates frontend modules for development
 	@echo "Running frontend-install target"
 	@echo ""
 	docker-compose up -d frontend
-	docker-compose exec frontend npm install mr-developer
 	docker-compose exec frontend npm run develop
 	docker-compose exec frontend make activate-all
 	docker-compose exec frontend npm install
@@ -212,6 +211,10 @@ shell:		## Starts a shell with proper env set
 start-npm-cache:		## Starts the Verdacio NPM cache
 	cd ${FRONTEND}; \
 	PATH=$(HOME)/.node_modules/bin:$(PATH) verdaccio -l 0.0.0.0:4873 -c verdaccio-config.yaml
+
+.PHONY: test-frontend-image
+test-frontend-image:		## Try the frontend image separately
+	docker run --rm -it -p $(FRONTEND_PORT):$(FRONTEND_PORT) --user node $(FRONTEND_IMAGE_NAME) bash
 
 .PHONY: help
 help:		## Show this help.
