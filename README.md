@@ -1,19 +1,15 @@
 # Volto/Plone-based generic fullstack development skeleton
 
-A place to put common files used to develop Plone 5 + Volto based projects. 
+A place to put common files used to develop Plone 5 + Volto based projects.
 
 The idea is to have a central place of useful code and configuration that can
 provide a uniform developing experience. Stacks generated from this skeleton are not intended to be used in production, only for development. A production setup might be later provided as part of this skeleton.
 
 ## Getting started on a new project
 
-1. Create your empty repo, publish it to github
-2. (Optional) Add a `frontend` folder as a submodule
-3. Add the skeleton files, using:
-
-```sh
-curl https://raw.githubusercontent.com/eea/plone5-fullstack-skeleton/master/setup.sh | bash -s
-```
+1. Clone this repo
+2. Clone https://github.com/eea/volto-starter-kit/ under folder "frontend"
+3. Adjust image and package names in all files.
 
 You can now run `make help` to see the recipes that you have available.
 
@@ -69,7 +65,7 @@ The frontend development part is optional. Not all repositories using this skele
 
 When developing a new frontend addon, the end goal is to have it available standalone, as an npm released package. The "classic" option would be to run `npm link` inside the package, then link it inside the frontend node_modules with `npm link packagename`. This requires that you also transpile and bundle the code inside that package, usually achieved with webpack configured with babel loaders.
 
-While that is possible, there's another simpler way available: have "volto" (actually volto's razzle/webpack/babel presets) compile that code and alias that module's path in volto. See https://docs.voltocms.com/customizing/add-ons/#jsconfigjson Volto documentation recommends `mr.developer` as a tool that, given a configuration file with package definitions, it can clone those packages in the `src/addons` folder. Then the `jsconfig.json`, `.eslintrc` and `package.json` files need to be adjusted to include aliases for the new addon package. 
+While that is possible, there's another simpler way available: have "volto" (actually volto's razzle/webpack/babel presets) compile that code and alias that module's path in volto. See https://docs.voltocms.com/customizing/add-ons/#jsconfigjson Volto documentation recommends `mr.developer` as a tool that, given a configuration file with package definitions, it can clone those packages in the `src/addons` folder. Then the `jsconfig.json`, `.eslintrc` and `package.json` files need to be adjusted to include aliases for the new addon package.
 
 So, to recap:
 

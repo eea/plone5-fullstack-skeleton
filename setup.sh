@@ -4,8 +4,9 @@ rm -rf .skel
 git clone https://github.com/eea/plone5-fullstack-skeleton.git .skel
 
 if [ -d frontend ]; then
-  mv .skel/_frontend/* ./frontend/
-  rm -rf .skel/_frontend
+  # mv .skel/_frontend/* ./frontend/
+  git clone https://github.com/eea/volto-starter-kit/ frontend
+  # rm -rf .skel/_frontend
 fi;
 
 # cp -rna .skel/* .
